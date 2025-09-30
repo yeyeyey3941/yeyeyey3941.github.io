@@ -1,0 +1,33 @@
+{
+  "homepage": "https://yeyeyey3941.github.io",
+  "name": "yeyeyey-blog",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "copy-posts": "tsx scripts/copy-posts.ts",
+    "copy-posts:ci": "tsx scripts/copy-posts-ci.ts",
+    "dev": "npm run copy-posts && vite",
+    "build": "npm run copy-posts:ci && vite build",
+    "build:local": "npm run copy-posts && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.26.0",
+    "rehype-highlight": "^7.0.0",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "@types/react": "^18.3.25",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.3.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.2",
+    "vite": "^5.4.0"
+  }
+}
