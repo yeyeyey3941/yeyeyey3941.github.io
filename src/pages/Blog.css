@@ -65,6 +65,7 @@
   background-color: var(--primary-color);
   color: white;
   padding: 0.2rem 0.6rem;
+  margin: 0.1rem;
   border-radius: 0.25rem;
   font-size: 0.85rem;
 }

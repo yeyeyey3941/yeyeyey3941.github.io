@@ -93,8 +93,9 @@ function BlogPost() {
           <h1>{post.title}</h1>
           <div className="post-meta">
             <span className="post-date">{formatDate(post.date)}</span>
+            {/* Categories split by comma with span for each category */}
             {post.categories && (
-              <span className="post-category">{post.categories}</span>
+              <span className="list-categories">{post.categories.split(',').map(category => category.trim()).map(category => <span className="post-category" key={category}>{category}</span>)}</span>
             )}
           </div>
         </header>

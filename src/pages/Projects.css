@@ -49,7 +49,7 @@
 
 .project-card li {
   margin-bottom: 0.75rem;
-  padding-left: 0;
+  padding-left: 1rem;
 }
 
 .project-card ol {
@@ -80,5 +80,5 @@
 }
 
 .contact li {
-  padding-left: 0;
+  padding-left: 1rem;
 }

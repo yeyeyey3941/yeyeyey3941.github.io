@@ -71,7 +71,7 @@ function Blog() {
                 <div className="post-meta">
                   <span className="post-date">{formatDate(post.date)}</span>
                   {post.categories && (
-                    <span className="post-category">{post.categories}</span>
+                    <span className="list-categories">{post.categories.split(',').map(category => category.trim()).map(category => <span className="post-category" key={category}>{category}</span>)}</span>
                   )}
                 </div>
               </Link>
