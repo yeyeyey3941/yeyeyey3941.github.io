@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { siteConfig } from '../config/site'
 import { parseFrontMatter, getSlugFromFilename, formatDate } from '../utils/posts'
 import type { Post } from '../types'
@@ -8,6 +8,8 @@ import './Blog.css'
 function Blog() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     async function loadPosts() {
@@ -49,6 +51,37 @@ function Blog() {
     loadPosts()
   }, [])
 
+  // URL에서 카테고리 필터 가져오기
+  const selectedCategory = searchParams.get('category') || ''
+
+  // 모든 카테고리 목록 추출
+  const allCategories = Array.from(
+    new Set(
+      posts.flatMap(post => 
+        post.categories ? post.categories.split(',').map(c => c.trim()) : []
+      )
+    )
+  ).sort()
+
+  // 검색 및 카테고리 필터링
+  const filteredPosts = posts.filter(post => {
+    const matchesSearch = searchQuery === '' || 
+      post.title.toLowerCase().includes(searchQuery.toLowerCase())
+    
+    const matchesCategory = selectedCategory === '' || 
+      (post.categories && post.categories.split(',').map(c => c.trim()).includes(selectedCategory))
+    
+    return matchesSearch && matchesCategory
+  })
+
+  const handleCategoryClick = (category: string) => {
+    if (category === selectedCategory) {
+      setSearchParams({}) // 같은 카테고리 클릭 시 필터 해제
+    } else {
+      setSearchParams({ category })
+    }
+  }
+
   if (loading) {
     return <div className="blog"><p>로딩 중...</p></div>
   }
@@ -60,11 +93,49 @@ function Blog() {
         <p>{siteConfig.blog.description}</p>
       </header>
 
+      {/* 검색 및 필터 영역 */}
+      <div className="blog-filters">
+        <input
+          type="text"
+          placeholder="🔍 포스트 검색..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="search-input"
+        />
+
+        <div className="category-filters">
+          <button 
+            className={`category-filter-btn ${selectedCategory === '' ? 'active' : ''}`}
+            onClick={() => setSearchParams({})}
+          >
+            전체 ({posts.length})
+          </button>
+          {allCategories.map(category => {
+            const count = posts.filter(p => 
+              p.categories && p.categories.split(',').map(c => c.trim()).includes(category)
+            ).length
+            return (
+              <button
+                key={category}
+                className={`category-filter-btn ${selectedCategory === category ? 'active' : ''}`}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {category} ({count})
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       <div className="posts-list">
-        {posts.length === 0 ? (
-          <p>아직 작성된 포스트가 없습니다.</p>
+        {filteredPosts.length === 0 ? (
+          <p>
+            {searchQuery || selectedCategory 
+              ? '검색 결과가 없습니다.' 
+              : '아직 작성된 포스트가 없습니다.'}
+          </p>
         ) : (
-          posts.map((post) => (
+          filteredPosts.map((post) => (
             <article key={post.slug} className="post-card">
               <Link to={`/scribble/${post.slug}`}>
                 <h2>{post.title}</h2>

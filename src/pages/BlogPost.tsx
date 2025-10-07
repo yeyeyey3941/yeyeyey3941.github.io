@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import mermaid from 'mermaid'
 import { siteConfig } from '../config/site'
 import { parseFrontMatter, formatDate } from '../utils/posts'
 import './BlogPost.css'
@@ -13,6 +14,39 @@ interface PostData {
   date: string
   categories: string
   content: string
+}
+
+// Mermaid 컴포넌트
+function MermaidDiagram({ chart }: { chart: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (ref.current && chart) {
+      // 기존 내용 제거
+      ref.current.innerHTML = ''
+      
+      // Mermaid 초기화 및 렌더링
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'default',
+        securityLevel: 'loose',
+        fontFamily: 'inherit'
+      })
+      
+      mermaid.render(`mermaid-${Date.now()}`, chart).then(({ svg }) => {
+        if (ref.current) {
+          ref.current.innerHTML = svg
+        }
+      }).catch((error) => {
+        console.error('Mermaid rendering error:', error)
+        if (ref.current) {
+          ref.current.innerHTML = `<p>다이어그램을 렌더링할 수 없습니다: ${error.message}</p>`
+        }
+      })
+    }
+  }, [chart])
+
+  return <div ref={ref} className="mermaid-diagram" />
 }
 
 function BlogPost() {
@@ -104,6 +138,23 @@ function BlogPost() {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
+            components={{
+              code({ className, children, ...props }: any) {
+                const match = /language-(\w+)/.exec(className || '')
+                const language = match ? match[1] : ''
+                const inline = props.inline
+                
+                if (language === 'mermaid' && !inline) {
+                  return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />
+                }
+                
+                return (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                )
+              }
+            }}
           >
             {post.content}
           </ReactMarkdown>
