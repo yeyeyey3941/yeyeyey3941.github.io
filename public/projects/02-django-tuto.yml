@@ -1,0 +1,25 @@
+id: 2
+title: "Django-tuto : 모놀리틱 아키텍쳐 구현 경험 프로젝트"
+description: "모놀리틱 아키텍쳐 구현 시스템 및 모니터링 시스템 구축 경험을 위한 프로젝트"
+github: "https://github.com/yeyeyey3941/django-tuto"
+tags:
+  - Python
+  - Django
+  - React
+  - Docker-compose
+  - Nginx
+  - ELK
+  - Prometheus
+  - Grafana
+status: completed
+order: 2
+
+sections:
+  features:
+    title: "주요 특징"
+    content: |
+      - Docker-compose 를 통해 Django 와 React 를 연동하여 모놀리틱 아키텍쳐 구현 경험 프로젝트
+      - Nginx 를 사용한 리버스 프록시 & static 파일 서빙
+      - ELK+filebeat 와 Django Backend 연동을 통한 로깅 시스템 구축
+      - Prometheus+Grafana 와 Django Backend 연동을 통한 메트릭 수집 및 모니터링 시스템 구축
+

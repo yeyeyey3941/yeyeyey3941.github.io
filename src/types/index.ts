@@ -1,13 +1,3 @@
-// 프로젝트 타입
-export interface Project {
-  id: number
-  title: string
-  description: string
-  techStack: string[]
-  features: string[]
-  github: string
-}
-
 // 사이트 설정 타입
 export interface SiteConfig {
   title: string
@@ -30,19 +20,6 @@ export interface BlogConfig {
   postsPath: string
 }
 
-// 기술 스택 타입
-export interface TechStack {
-  frontend: string[]
-  backend: string[]
-  tools: string[]
-}
-
-// 예정 프로젝트 타입
-export interface UpcomingProject {
-  title: string
-  description: string
-}
-
 // 블로그 포스트 타입
 export interface PostMetadata {
   title?: string
@@ -63,4 +40,34 @@ export interface Post {
 export interface ParsedPost {
   metadata: PostMetadata
   content: string
+}
+
+// 프로젝트 섹션 타입
+export interface ProjectSection {
+  title: string
+  content: string  // 마크다운 형식
+}
+
+// 범용 콘텐츠 타입 (동적 필드 지원)
+export interface ContentMetadata {
+  id?: number
+  title?: string
+  description?: string
+  github?: string
+  tags?: string[]
+  status?: string
+  order?: number
+  
+  // 동적 섹션
+  sections?: Record<string, ProjectSection>
+  
+  // 기타 동적 필드
+  [key: string]: any
+}
+
+export interface ContentItem {
+  slug: string
+  metadata: ContentMetadata
+  content: string
+  filename?: string
 }

@@ -9,6 +9,10 @@ import { parseFrontMatter, formatDate } from '../utils/posts'
 import './BlogPost.css'
 import 'highlight.js/styles/github-dark.css'
 
+// 전역 카운터 기반 ID 생성
+let mermaidIdCounter = 0
+const generateMermaidId = () => `mermaid-diagram-${++mermaidIdCounter}`
+
 interface PostData {
   title: string
   date: string
@@ -19,6 +23,7 @@ interface PostData {
 // Mermaid 컴포넌트
 function MermaidDiagram({ chart }: { chart: string }) {
   const ref = useRef<HTMLDivElement>(null)
+  const [id] = useState(() => generateMermaidId())
 
   useEffect(() => {
     if (ref.current && chart) {
@@ -33,7 +38,7 @@ function MermaidDiagram({ chart }: { chart: string }) {
         fontFamily: 'inherit'
       })
       
-      mermaid.render(`mermaid-${Date.now()}`, chart).then(({ svg }) => {
+      mermaid.render(id, chart).then(({ svg }) => {
         if (ref.current) {
           ref.current.innerHTML = svg
         }
@@ -44,7 +49,7 @@ function MermaidDiagram({ chart }: { chart: string }) {
         }
       })
     }
-  }, [chart])
+  }, [chart, id])
 
   return <div ref={ref} className="mermaid-diagram" />
 }

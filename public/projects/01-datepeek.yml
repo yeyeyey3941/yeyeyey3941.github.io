@@ -1,0 +1,19 @@
+id: 1
+title: "Datepeek : 지역기반 데이트 스팟 공유"
+description: "직접 데이트 코스를 만들고 공유하며, 다른 사람들의 추천 코스를 손쉽게 찾아볼 수 있는 플랫폼 개발 프로젝트"
+github: "https://github.com/yeyeyey3941/Q2_Project_Back"
+tags:
+  - Node.js
+  - Express
+  - MySQL
+  - React
+status: completed
+order: 1
+
+sections:
+  features:
+    title: "주요 특징"
+    content: |
+      - passport.js 를 통한 인증 시스템 구현 프로젝트
+      - AWS EC2+ALB 를 활용한 배포 경험(현재는 종료)
+

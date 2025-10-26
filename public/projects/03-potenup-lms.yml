@@ -1,0 +1,30 @@
+id: 3
+title: "potenup-lms : 콘솔 기반 학습관리시스템"
+description: "강좌, 카테고리, 학습자료를 관리할 수 있는 계층형 구조의 LMS 시스템"
+github: "https://github.com/yeyeyey3941/potenup-lms-1st-month"
+tags:
+  - Java
+  - MySQL
+  - JDBC
+  - HikariCP
+status: completed
+order: 3
+
+sections:
+  features:
+    title: "주요 역할"
+    content: |
+      - Course → Section → Content 3단계 계층 구조 설계
+      - 2단계 카테고리 시스템 및 Full-text search 기반 강좌 검색
+      - BlockingQueue + ExecutorService 기반 비동기 파일 업로드 시스템 구현 (담당)
+      - Asset 업로드 상태 추적 및 자동 재시도 로직 구현 (담당)
+      - MySQL 벤더 에러코드 기반 예외 계층 구조 설계
+      - ThreadLocal 기반 Connection 관리로 트랜잭션 일관성 보장
+  
+  responsibilities:
+    title: "담당 역할"
+    content: |
+      - Asset 도메인 전체 설계 및 구현 (비동기 파일 업로드 시스템)
+      - 워커 스레드 풀 기반 업로드 큐 처리 로직
+      - 업로드 상태 전이 관리 (PENDING → UPLOADING → SUCCESS/FAILED → RETRY)
+
