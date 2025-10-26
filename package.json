@@ -7,9 +7,10 @@
   "scripts": {
     "copy-posts": "tsx scripts/copy-posts.ts",
     "copy-posts:ci": "tsx scripts/copy-posts-ci.ts",
+    "copy-404": "tsx scripts/copy-404.ts",
     "dev": "npm run copy-posts && vite",
-    "build": "npm run copy-posts:ci && vite build",
-    "build:local": "npm run copy-posts && vite build",
+    "build": "npm run copy-posts:ci && vite build && npm run copy-404",
+    "build:local": "npm run copy-posts && vite build && npm run copy-404",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -30,3 +30,7 @@ _site
 .jekyll-metadata
 vendor
 Gemfile.lock
+
+# loca
+public/posts/*
+public/posts/index.json
